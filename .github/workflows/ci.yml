@@ -1,0 +1,110 @@
+name: CI Checks
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  python-check:
+    name: Python syntax and imports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends curl wget unzip jq
+          pip install --no-cache-dir -r requirements.txt
+
+      - name: Check Python syntax
+        run: |
+          python -m py_compile main.py
+          python -m py_compile helper.py
+          python -m py_compile validation.py
+          python -m py_compile token_generator.py
+          python -m py_compile new-server.py
+          python -m py_compile packager/__init__.py
+          python -m py_compile packager/config.py
+          python -m py_compile packager/apk.py
+          python -m py_compile packager/__main__.py
+          python -m py_compile server/__init__.py
+          python -m py_compile server/database.py
+          python -m py_compile server/app.py
+          python -m py_compile server/__main__.py
+
+      - name: Verify imports
+        run: |
+          python -c "import packager.config"
+          python -c "import packager.apk"
+          python -c "import server.database"
+          python -c "import server.app"
+          python -c "import validation"
+          python -c "import token_generator"
+
+  workflow-lint:
+    name: Workflow YAML validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate workflow files
+        run: |
+          pip install pyyaml
+          python -c "
+          import yaml, sys, pathlib
+          errors = []
+          for path in pathlib.Path('.github/workflows').glob('*.yml'):
+              try:
+                  yaml.safe_load(path.read_text())
+              except Exception as e:
+                  errors.append(f'{path}: {e}')
+          if errors:
+              print('\\n'.join(errors))
+              sys.exit(1)
+          print('All workflow YAML files are valid')
+          "
+
+  config-check:
+    name: Configuration files check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate choices.ini
+        run: |
+          python -c "
+          import configparser, sys
+          config = configparser.ConfigParser()
+          config.read('choices.ini')
+          required_sections = ['app', 'token', 'content', 'buttons', 'strings', 'behavior', 'decompile', 'sign', 'public']
+          missing = [s for s in required_sections if s not in config]
+          if missing:
+              print(f'Missing sections in choices.ini: {missing}')
+              sys.exit(1)
+          print('choices.ini structure is valid')
+          "
+
+      - name: Validate manifest.json
+        run: |
+          python -c "
+          import json, sys
+          with open('manifest.json') as f:
+              data = json.load(f)
+          required_keys = ['author', 'version']
+          missing = [k for k in required_keys if k not in data]
+          if missing:
+              print(f'Missing keys in manifest.json: {missing}')
+              sys.exit(1)
+          print('manifest.json structure is valid')
+          "

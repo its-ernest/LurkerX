@@ -99,16 +99,14 @@ alias =
 
 ```
 
-12. Now open your GitHub Actions, for e.g, mine is 
+12. After that restart your Panel. To do that, go back to your Render dashboard, select the web service you created, click on `Manual Deploy`. Wait for the deployment to complete successfully(if it shows green tick icon)
 
-`https://github.com/nooby-jayz/LurkerX/actions`
+13. Open the link Render generated for you. (The link ending in `.onrender.com`)
 
-13. Choose the latest one, the first one on top. 
+14. Open the panel and click on `BUILD APP (GITHUB CI)`
 
-14. Wait for it to build the malware successfully then scroll to the bottom (Artifacts section)
+15.  You should see the app built, click on it to download
 
-14.  You should see the app built, click on it to download
-
-13. After that install it on the target device you aim to monitor
+16. After that install it on the target device you aim to monitor
  
-14. All information on that device can also be viewed on your render.com URL portal. 
+17. All information on that device can also be viewed on your `onrender.com` URL portal. 

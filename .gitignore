@@ -19,6 +19,7 @@ generate
 
 build-tools/
 build-tools.zip
+/validation/
 
 # Databases and Journals
 *.db

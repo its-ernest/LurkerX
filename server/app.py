@@ -12,6 +12,7 @@ import zipfile
 import tempfile
 import requests
 from datetime import datetime, timezone
+import traceback
 
 from server.database import safe_device_name, get_device_db, insert_data, query_data, get_log_structure, get_device_dates, query_data_by_date
 from validation import decrypt_token, decode_token
@@ -109,6 +110,7 @@ def create_app(base_dir: Path) -> Flask:
                 )
             except requests.RequestException as exc:
                 print(f"[validate_token] validator unreachable: {exc}")
+                traceback.print_exc()
                 return jsonify({"error": "Validator unreachable"}), 502
 
             try:

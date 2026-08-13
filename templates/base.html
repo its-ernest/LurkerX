@@ -132,6 +132,16 @@ body {
   flex-direction: column;
   gap: 8px;
 }
+.sidebar-footer .btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sidebar-footer .btn-row .btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
 .btn {
   width: 100%;
   padding: 10px;
@@ -207,31 +217,19 @@ body {
   gap: 8px;
   flex-wrap: wrap;
 }
-.control-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--panel-2);
-  color: var(--text);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.85rem;
-  transition: all 0.15s;
+.control-buttons .btn {
+  width: auto;
+  flex: 0 0 auto;
+}
+.filter-buttons {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }
-.control-btn:hover {
-  border-color: var(--accent-2);
-  color: var(--accent-2);
-}
-.control-btn.active {
-  background: var(--accent-2);
-  color: #000;
-  border-color: var(--accent-2);
-}
-.control-btn .material-icons-round {
-  font-size: 16px;
+.filter-buttons .btn {
+  width: auto;
+  flex: 0 0 auto;
 }
 
 .board-scroll {
@@ -432,14 +430,16 @@ body {
       </div>
     </div>
     <div class="sidebar-footer">
-      <button id="build-docker-btn" class="btn waves-effect waves-light" style="background: var(--accent); color: #000;">
-        <span class="material-icons-round left">build</span>
-        Build APK (DOCKER)
-      </button>
-      <button id="build-github-btn" class="btn waves-effect waves-light" style="background: transparent; color: var(--accent); border: 1px solid var(--accent);">
-        <span class="material-icons-round left">cloud_sync</span>
-        Build APK (GITHUB CI)
-      </button>
+      <div class="btn-row">
+        <button id="build-docker-btn" class="btn waves-effect waves-light" style="background: var(--accent); color: #000;">
+          <span class="material-icons-round left">build</span>
+          Build APK (DOCKER)
+        </button>
+        <button id="build-github-btn" class="btn waves-effect waves-light" style="background: transparent; color: var(--accent); border: 1px solid var(--accent);">
+          <span class="material-icons-round left">cloud_sync</span>
+          Build APK (GITHUB CI)
+        </button>
+      </div>
       <a id="download-apk-link" class="btn waves-effect waves-light" href="/download_apk" style="background: transparent; color: var(--accent); border: 1px solid var(--accent);">
         <span class="material-icons-round left">download</span>
         Download App
@@ -771,6 +771,7 @@ body {
       M.updateTextFields();
     });
   </script>
+  <script>
     document.getElementById("build-docker-btn").addEventListener("click", function () {
       const btn = document.getElementById("build-docker-btn");
       btn.disabled = true;

@@ -94,15 +94,16 @@ def create_app(base_dir: Path) -> Flask:
             if not token:
                 return jsonify({"error": "Token required"}), 400
 
-            ini = load_ini(Path(__file__).resolve().parent.parent / "choices.ini")
-            remote_url = ini.get("behavior", "remote_url", fallback=None)
-            if not remote_url:
-                return jsonify({"error": "Server misconfigured: remote_url missing"}), 500
+            token_server_url = os.environ.get("TOKEN_SERVER_URL", "http://localhost:8080").rstrip("/")
+            if not token_server_url:
+                return jsonify({"error": "Server misconfigured: TOKEN_SERVER_URL missing"}), 500
 
-            verify_url = remote_url.rstrip("/") + "/api/v1/token/validate"
+            ini = load_ini(Path(__file__).resolve().parent.parent / "choices.ini")
+            remote_url = ini.get("behavior", "remote_url", fallback=request.host_url)
+
             try:
                 resp = requests.post(
-                    verify_url,
+                    f"{token_server_url}/api/v1/token/validate",
                     json={"token": token, "tool": "LurkerX", "remote_url": remote_url},
                     timeout=15,
                 )

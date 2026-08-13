@@ -1,0 +1,40 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - BASE_DIR=/app
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-fantastic_lurkerx_key_2024}
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  validator:
+    build:
+      context: ./validator
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./validator/frontend:/app/frontend
+    environment:
+      - PAYSTACK_SECRET_KEY=${PAYSTACK_SECRET_KEY}
+      - BASE_URL=${BASE_URL:-http://localhost:8080}
+    env_file:
+      - validator/.env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

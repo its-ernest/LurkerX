@@ -20,7 +20,7 @@ if __name__ == "__main__":
     ini = load_ini(base_dir / "choices.ini")
 
     app_name = ini.get("app", "name", fallback="LurkerX")
-    app_icon = Path(ini.get("content", "icon", fallback="icon.png"))
+    app_icon = base_dir / ini.get("content", "icon", fallback="icon.png")
     server_url = ini.get("behavior", "remoteurl", fallback="http://localhost:5000")
 
     args = parse_args()
@@ -32,9 +32,10 @@ if __name__ == "__main__":
         server_url = args.url
 
     manifest = load_manifest(base_dir / "manifest.json")
-    base_apk = Path(ini.get("decompile", "from"))
-    keystore = Path(ini.get("sign", "keystore"))
+    base_apk = base_dir / ini.get("decompile", "from")
+    keystore = base_dir / ini.get("sign", "keystore")
     keystore_pass = ini.get("sign", "keystore_pass")
+    key_password = ini.get("sign", "key_password", fallback=keystore_pass)
     keystore_alias = ini.get("sign", "alias", fallback=None)
 
     if not base_apk.exists():
@@ -65,6 +66,7 @@ if __name__ == "__main__":
             base_apk=base_apk,
             keystore=keystore,
             keystore_pass=keystore_pass,
+            key_password=key_password,
             keystore_alias=keystore_alias,
             base_dir=base_dir,
         )

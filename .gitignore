@@ -10,6 +10,8 @@
 bin/
 apktool.bat
 
+.env
+
 build-tools/
 
 # Linux related binaries
@@ -19,7 +21,8 @@ generate
 
 build-tools/
 build-tools.zip
-/validation/
+/validator/
+/lurkerx-apk/
 
 # Databases and Journals
 *.db

@@ -93,7 +93,7 @@ from = base.apk
 repo_url= https://github.com/its-ernest/LurkerX
 
 [sign]
-keystore = mykey.jks
+keystore = test.jks
 keystore_pass = password
 alias =
 

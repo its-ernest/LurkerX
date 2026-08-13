@@ -25,3 +25,14 @@ def generate_token(tool_name: str, days_valid: int = 30) -> str:
     encrypted = FERNET.encrypt(encoded.encode()).decode()
 
     return encrypted
+
+def decrypt_token(token: str) -> str | None:
+    """
+    Token arrives as Fernet(encrypted_base64_token)
+    We decrypt it to recover the base64 text.
+    """
+    try:
+        decrypted = FERNET.decrypt(token.encode())
+        return decrypted.decode()
+    except Exception:
+        return None

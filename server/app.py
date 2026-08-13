@@ -14,7 +14,7 @@ import requests
 from datetime import datetime, timezone
 
 from server.database import safe_device_name, get_device_db, insert_data, query_data, get_log_structure, get_device_dates, query_data_by_date
-from validation import validate_token as validate_token_util, decrypt_token, decode_token
+from validation import decrypt_token, decode_token
 from packager.config import load_ini
 
 
@@ -93,13 +93,37 @@ def create_app(base_dir: Path) -> Flask:
             token = data.get("token") if hasattr(data, "get") else (data.get("token") if isinstance(data, dict) else None)
             if not token:
                 return jsonify({"error": "Token required"}), 400
-            if not validate_token_util(token, "LurkerX"):
-                return jsonify({"error": "Invalid or expired token"}), 401
+
+            ini = load_ini(Path(__file__).resolve().parent.parent / "choices.ini")
+            remote_url = ini.get("behavior", "remote_url", fallback=None)
+            if not remote_url:
+                return jsonify({"error": "Server misconfigured: remote_url missing"}), 500
+
+            verify_url = remote_url.rstrip("/") + "/api/v1/token/validate"
+            try:
+                resp = requests.post(
+                    verify_url,
+                    json={"token": token, "tool": "LurkerX", "remote_url": remote_url},
+                    timeout=15,
+                )
+            except requests.RequestException as exc:
+                print(f"[validate_token] validator unreachable: {exc}")
+                return jsonify({"error": "Validator unreachable"}), 502
+
+            try:
+                payload = resp.json()
+            except Exception:
+                return jsonify({"error": "Invalid validator response"}), 502
+
+            if resp.status_code != 200 or not payload.get("valid"):
+                reason = payload.get("error") or payload.get("message") or "Invalid or expired token"
+                return jsonify({"error": reason}), 401
+
             session["token_valid"] = True
             max_age = _token_expiry_seconds(token) or (60 * 60 * 24 * 30)
-            resp = make_response(jsonify({"status": "ok"}))
-            resp.set_cookie("lurkerx_token", token, max_age=max_age, httponly=True, samesite="Lax")
-            return resp
+            result = make_response(jsonify({"status": "ok"}))
+            result.set_cookie("lurkerx_token", token, max_age=max_age, httponly=True, samesite="Lax")
+            return result
         except Exception as e:
             return jsonify({"error": f"Server error: {e}"}), 500
 
@@ -273,6 +297,7 @@ def create_app(base_dir: Path) -> Flask:
                 return jsonify({"error": "repo_url is required. Set [public] repo_url in choices.ini"}), 400
 
             repo_url = repo_url.strip().rstrip("/")
+            print("Repo URL:", repo_url)
             m = re.match(r"https?://github\.com/([^/]+)/([^/]+)", repo_url)
             if not m:
                 return jsonify({"error": "Invalid GitHub repo URL"}), 400

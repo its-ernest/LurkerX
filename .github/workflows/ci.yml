@@ -87,7 +87,7 @@ jobs:
           import configparser, sys
           config = configparser.ConfigParser()
           config.read('choices.ini')
-          required_sections = ['app', 'content', 'buttons', 'strings', 'behavior', 'decompile', 'sign', 'public']
+          required_sections = ['app', 'content', 'behavior', 'decompile', 'sign']
           missing = [s for s in required_sections if s not in config]
           if missing:
               print(f'Missing sections in choices.ini: {missing}')

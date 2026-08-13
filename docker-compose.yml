@@ -27,7 +27,7 @@ services:
       - "8080:8080"
     environment:
       - PAYSTACK_SECRET_KEY=sk_test_f60d395afd14fb86f9a599220be875aacc72c261
-      - BASE_URL=${BASE_URL:-http://localhost:8080}
+      - BASE_URL=${BASE_URL:-https://web-token-page.onrender.com}
       - FRONTEND_DIR=./frontend
     restart: unless-stopped
     healthcheck:

@@ -10,7 +10,7 @@
 bin/
 apktool.bat
 
-.env
+#.env (INTENTIONALLY ADDED TEST ENV VARS, ALWAYS SAFE TO COMMIT, NOTHING PRIVATE HERE)
 
 build-tools/
 

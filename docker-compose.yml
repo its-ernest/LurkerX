@@ -8,7 +8,7 @@ services:
     environment:
       - BASE_DIR=/app
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-fantastic_lurkerx_key_2024}
-      - TOKEN_SERVER_URL=https://web-token-page.onrender.com
+      - TOKEN_SERVER_URL=http://validator:8080
     env_file:
       - .env
     restart: unless-stopped
@@ -27,7 +27,7 @@ services:
       - "8080:8080"
     environment:
       - PAYSTACK_SECRET_KEY=sk_test_f60d395afd14fb86f9a599220be875aacc72c261
-      - BASE_URL=${BASE_URL:-https://web-token-page.onrender.com}
+      - BASE_URL=${BASE_URL:-http://localhost:8080}
       - FRONTEND_DIR=./frontend
     restart: unless-stopped
     healthcheck:

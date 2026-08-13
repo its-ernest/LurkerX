@@ -23,6 +23,8 @@ build-tools/
 build-tools.zip
 /validator/
 /lurkerx-apk/
+/workdir/
+/result/
 
 # Databases and Journals
 *.db

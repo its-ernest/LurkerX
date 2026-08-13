@@ -173,15 +173,15 @@ def modify_apk(
         apksigner, "sign",
         "--ks", keystore,
         "--ks-pass", f"pass:{keystore_pass}",
-        "--out", signed,
-        aligned
     ]
 
     if key_password:
-        sign_cmd[3:3] = ["--key-pass", f"pass:{key_password}"]
+        sign_cmd += ["--key-pass", f"pass:{key_password}"]
 
     if keystore_alias:
-        sign_cmd[3:3] = ["--ks-key-alias", keystore_alias]
+        sign_cmd += ["--ks-key-alias", keystore_alias]
+
+    sign_cmd += ["--out", signed, aligned]
 
     run(sign_cmd)
 

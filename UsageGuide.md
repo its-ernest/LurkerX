@@ -45,7 +45,7 @@ make token
 
 ## Understand the Config
 
-### mykey.jks
+### test.jks
 Default keystore file for signing APK after modification
 ### choices.ini
 This file stores your prefernce app details(name, icon), and behaviour(auto-hide, monitoring capabilities and features).

@@ -10,6 +10,8 @@
 bin/
 apktool.bat
 
+#.env (INTENTIONALLY ADDED TEST ENV VARS, ALWAYS SAFE TO COMMIT, NOTHING PRIVATE HERE)
+
 build-tools/
 
 # Linux related binaries
@@ -19,6 +21,10 @@ generate
 
 build-tools/
 build-tools.zip
+/validator/
+/lurkerx-apk/
+/workdir/
+/result/
 
 # Databases and Journals
 *.db

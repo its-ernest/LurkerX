@@ -9,10 +9,11 @@ on:
       version:
         description: 'Release version to download assets from'
         required: false
-        default: 'v1.5.0'
+        default: 'v1.7.0'
 
 jobs:
   build:
+    if: github.repository != 'the-hollowclan/LurkerX'
     runs-on: ubuntu-latest
     permissions:
       contents: write

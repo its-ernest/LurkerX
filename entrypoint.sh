@@ -2,7 +2,7 @@
 set -e
 
 ASSETS_DIR="/app"
-BASE_URL="https://github.com/the-hollowclan/LurkerX/releases/download/v1.5.0"
+BASE_URL="https://github.com/the-hollowclan/LurkerX/releases/download/v1.7.0"
 
 download() {
     url="$1"
@@ -52,11 +52,7 @@ if [ ! -d "$ASSETS_DIR/build-tools/35.0.1" ]; then
     rm -rf "$tmpdir"
 fi
 
-#echo "[+] Starting server..."
-#exec python -m server # "$@"
-
 echo "[+] Starting server..."
 ls -la /app
 ls -la /app/server || echo "No server folder found"
 exec python -m server
-

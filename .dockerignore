@@ -2,11 +2,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.env
 .venv
 venv/
-ENV/
-env/
 .idea/
 .vscode/
 *.swp

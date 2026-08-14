@@ -27,6 +27,8 @@ def get_device_db(device_name: str, base_dir: Path) -> sqlite3.Connection:
             latitude TEXT,
             longitude TEXT,
             accuracy TEXT,
+            altitude TEXT,
+            speed TEXT,
             timestamp INTEGER,
             UNIQUE(timestamp)
         );
@@ -45,10 +47,24 @@ def get_device_db(device_name: str, base_dir: Path) -> sqlite3.Connection:
             package TEXT,
             title TEXT,
             text TEXT,
+            is_ongoing INTEGER,
             timestamp INTEGER,
             UNIQUE(package, title, timestamp)
         );
     """)
+
+    try:
+        conn.execute("ALTER TABLE gps ADD COLUMN altitude TEXT")
+    except Exception:
+        pass
+    try:
+        conn.execute("ALTER TABLE gps ADD COLUMN speed TEXT")
+    except Exception:
+        pass
+    try:
+        conn.execute("ALTER TABLE notifs ADD COLUMN is_ongoing INTEGER")
+    except Exception:
+        pass
 
     conn.commit()
     return conn
@@ -67,8 +83,8 @@ def insert_data(conn: sqlite3.Connection, item: str, messages: list) -> tuple[in
                 )
             elif item == "gps":
                 cur.execute(
-                    "INSERT OR IGNORE INTO gps (latitude, longitude, accuracy, timestamp) VALUES (?, ?, ?, ?)",
-                    (row.get("latitude"), row.get("longitude"), row.get("accuracy"), row.get("timestamp"))
+                    "INSERT OR IGNORE INTO gps (latitude, longitude, accuracy, altitude, speed, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
+                    (row.get("latitude"), row.get("longitude"), row.get("accuracy"), row.get("altitude"), row.get("speed"), row.get("timestamp"))
                 )
             elif item == "calls":
                 cur.execute(
@@ -77,8 +93,8 @@ def insert_data(conn: sqlite3.Connection, item: str, messages: list) -> tuple[in
                 )
             elif item == "notifs":
                 cur.execute(
-                    "INSERT OR IGNORE INTO notifs (package, title, text, timestamp) VALUES (?, ?, ?, ?)",
-                    (row.get("package"), row.get("title"), row.get("text"), row.get("timestamp"))
+                    "INSERT OR IGNORE INTO notifs (package, title, text, is_ongoing, timestamp) VALUES (?, ?, ?, ?, ?)",
+                    (row.get("package"), row.get("title"), row.get("text"), 1 if row.get("is_ongoing") else 0, row.get("timestamp"))
                 )
             else:
                 continue

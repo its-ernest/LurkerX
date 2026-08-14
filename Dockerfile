@@ -2,6 +2,7 @@ FROM python:3.12-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# INSTALL JAVA AND REQUIREMENTS
 RUN apt-get update && apt-get install -y --no-install-recommends \
     openjdk-21-jre-headless \
     curl \
@@ -9,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
+# APKTOOL INSTALLATION
 ARG APKTOOL_VERSION=2.9.3
 RUN set -eux; \
     for url in \
@@ -31,8 +33,8 @@ COPY . .
 
 RUN chmod +x /app/entrypoint.sh
 
-CMD [] 
-
 EXPOSE 5000
+
+#CMD ["ls"]
 
 ENTRYPOINT ["/app/entrypoint.sh"]

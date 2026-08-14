@@ -5,7 +5,7 @@ Your help is appreciated, whether it’s fixing bugs, improving features, or enh
 
 ---
 
-## 📌 Getting Started
+## Getting Started
 
 1. Fork the repository
 2. Clone your fork locally:

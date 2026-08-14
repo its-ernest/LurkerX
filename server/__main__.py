@@ -2,6 +2,7 @@ import sys
 
 from server.app import create_app
 from pathlib import Path
+from dotenv import load_dotenv
 
 
 def main():
@@ -16,4 +17,5 @@ def main():
 
 
 if __name__ == "__main__":
+    load_dotenv()
     main()

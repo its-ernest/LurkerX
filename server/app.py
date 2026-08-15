@@ -293,11 +293,11 @@ def create_app(base_dir: Path) -> Flask:
 
             if not repo_url:
                 ini = load_ini(Path(__file__).resolve().parent.parent / "choices.ini")
-                repo_url = ini.get("public", "repo_url", fallback=None)
+                repo_url = ini.get("behavior", "repo_url", fallback=None)
                 print(f"[download_generated_app] using default repo_url from choices.ini: {repo_url}")
 
             if not repo_url:
-                return jsonify({"error": "repo_url is required. Set [public] repo_url in choices.ini"}), 400
+                return jsonify({"error": "repo_url is required. Set [behavior] repo_url in choices.ini"}), 400
 
             repo_url = repo_url.strip().rstrip("/")
             print("Repo URL:", repo_url)

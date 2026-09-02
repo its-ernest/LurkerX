@@ -34,6 +34,9 @@ jobs:
             VERSION="$(curl -sL https://api.github.com/repos/the-hollowclan/LurkerX/releases/latest | jq -r .tag_name)"
           fi
           if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
+            VERSION="v$(python -c "import configparser; c=configparser.ConfigParser(); c.read('choices.ini'); print(c.get('app','version',fallback='1.7.0'))")"
+          fi
+          if [ -z "$VERSION" ]; then
             echo "Failed to resolve release version" >&2
             exit 1
           fi
